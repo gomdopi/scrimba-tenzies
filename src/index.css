@@ -15,6 +15,10 @@ body {
 }
 
 #root > main {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   width: 320px;
   height: 320px;
   background-color: #f5f5f5;
@@ -24,11 +28,12 @@ body {
   h1 {
     font-size: 1.6rem;
     font-weight: 700;
-    margin: 5px;
+    margin: 0;
     text-align: center;
   }
 
-  p {
+  span {
+    display: flex;
     padding: 0 10px;
     font-family: Inter, sans-serif;
     font-size: 0.8125rem;
@@ -38,39 +43,7 @@ body {
   }
 }
 
-#root > main > main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.die-container {
-  display: grid;
-  grid-template:
-    "a b c d e"
-    "f g h i j" / auto;
-  row-gap: 18px;
-  column-gap: 18px;
-}
-
-.dice {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 36px;
-  height: 36px;
-  background-color: white;
-  border-radius: 4px;
-  font-family: Karla, sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #2b283a;
-  box-shadow: 0px 2px 2px 0px #00000026;
-}
-
-.button {
+.game-button {
   width: 92px;
   height: 36px;
   font-family: Karla, sans-serif;
@@ -81,4 +54,35 @@ body {
   background-color: #5035ff;
   border: none;
   box-shadow: 0px 3.2px 7.68px 0px #0000002e;
+}
+
+.die-container {
+  display: grid;
+  grid-template:
+    "a b c d e"
+    "f g h i j" / auto;
+  justify-items: center;
+  row-gap: 18px;
+  column-gap: 18px;
+  margin: 28px 0;
+}
+
+.dice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  background-color: white;
+  border-radius: 4px;
+  border: none;
+  font-family: Karla, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2b283a;
+  box-shadow: 0px 2px 2px 0px #00000026;
+
+  &.frozen {
+    background-color: green;
+  }
 }
