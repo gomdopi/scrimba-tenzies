@@ -3,5 +3,37 @@
 }
 
 body {
+  font-family: Karla, Inter, sans-serif;
   background-color: darkslategray;
+}
+
+#root {
+  width: fit-content;
+  height: fit-content;
+  padding: 30px 20px;
+  background-color: #0b2434;
+
+  main {
+    width: 320px;
+    height: 320px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 25px;
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 5px;
+      text-align: center;
+    }
+
+    p {
+      padding: 0 10px;
+      font-family: Inter, sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: #4a4e74;
+      text-align: center;
+    }
+  }
 }
