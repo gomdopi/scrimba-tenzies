@@ -3,6 +3,7 @@
 }
 
 body {
+  margin: 0;
   font-family: Karla, Inter, sans-serif;
   background-color: darkslategray;
 }
@@ -17,7 +18,6 @@ body {
 #root > main {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   width: 320px;
   height: 320px;
@@ -44,7 +44,6 @@ body {
 }
 
 .game-button {
-  /* width: 92px; */
   height: 36px;
   font-family: Karla, sans-serif;
   font-size: 1rem;

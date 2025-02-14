@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import ReactConfetti from "react-confetti"
 import DiceContainer from "./components/DiceContainer"
 import Header from "./components/Header"
 
@@ -76,6 +77,7 @@ export default function App() {
 
   return (
     <main>
+      {hasWon ? <ReactConfetti width={360} height={380} /> : undefined}
       <Header statusText="Roll until all dice are the same. Click each die to freeze it at its current value between rolls." />
       <DiceContainer die={die} onDiceClick={handleDiceClick} />
       <button className="game-button" onClick={handleClick}>
