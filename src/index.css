@@ -18,6 +18,7 @@ body {
 #root > main {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   width: 320px;
   height: 320px;
@@ -54,20 +55,19 @@ body {
   border: none;
   box-shadow: 0px 3.2px 7.68px 0px #0000002e;
   padding: 0 16px;
+  cursor: pointer;
 }
 
-.die-container {
+.dice-container {
   display: grid;
-  grid-template:
-    "a b c d e"
-    "f g h i j" / auto;
+  grid-template: auto auto / repeat(5, 1fr);
   justify-items: center;
   row-gap: 18px;
   column-gap: 18px;
   margin: 28px 0;
 }
 
-.dice {
+.die {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,6 +81,7 @@ body {
   font-weight: 700;
   color: #2b283a;
   box-shadow: 0px 2px 2px 0px #00000026;
+  cursor: pointer;
 
   &.frozen {
     background-color: #59e391;

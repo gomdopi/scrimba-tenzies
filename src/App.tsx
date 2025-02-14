@@ -1,77 +1,79 @@
 import { useEffect, useState } from "react"
 import ReactConfetti from "react-confetti"
-import DiceContainer from "./components/DiceContainer"
+import DieComponent from "./components/DieComponent"
 import Header from "./components/Header"
 
-export type Dice = {
+export type Die = {
   idx: number
   value: number
   frozen: boolean
 }
 
 export default function App() {
-  const [die, setDie] = useState(initialDie())
+  const [dice, setDice] = useState(initialDice())
   const [hasWon, setHasWon] = useState(false)
 
   useEffect(() => {
     checkHasWon()
-  }, [die])
+  }, [dice])
 
-  function initialDie(): Array<Dice> {
-    const die: Array<Dice> = []
+  const dieElements = dice.map(die => (
+    <DieComponent key={die.idx} die={die} onDieClick={handleDieClick} />
+  ))
+
+  function initialDice(): Array<Die> {
+    const dice: Array<Die> = []
 
     for (let i = 0; i < 10; i++) {
       const value = Math.floor(Math.random() * 6) + 1
-      die.push({
+      dice.push({
         idx: i,
         value,
         frozen: false,
       })
     }
 
-    return die
+    return dice
   }
 
-  function resetDie(): void {
-    setDie(initialDie())
+  function resetDice(): void {
+    setDice(initialDice())
   }
 
-  function rollDie(): void {
-    setDie(prevDie =>
-      prevDie.map(dice => (dice.frozen ? dice : rollDice(dice)))
-    )
+  function rollDice(): void {
+    setDice(prevDice => prevDice.map(die => (die.frozen ? die : rollDie(die))))
   }
 
-  function rollDice(dice: Dice): Dice {
+  function rollDie(die: Die): Die {
     const value = Math.floor(Math.random() * 6) + 1
     return {
-      ...dice,
+      ...die,
       value,
     }
   }
 
   function checkHasWon(): void {
-    const value = die[0].value
-    if (die.every(dice => dice.value === value && dice.frozen)) {
+    const value = dice[0].value
+    if (dice.every(die => die.value === value && die.frozen)) {
       setHasWon(true)
     }
   }
 
-  function handleDiceClick(idx: number): void {
+  function handleDieClick(idx: number): void {
     if (hasWon) return
-    setDie(prevDie => {
-      return prevDie.map(dice =>
-        dice.idx === idx ? { ...dice, frozen: !dice.frozen } : dice
+    setDice(prevDice => {
+      return prevDice.map(die =>
+        die.idx === idx ? { ...die, frozen: !die.frozen } : die
       )
     })
   }
 
   function handleClick(): void {
     if (hasWon) {
-      resetDie()
+      resetDice()
       setHasWon(false)
     } else {
-      rollDie()
+      rollDice()
     }
   }
 
@@ -79,7 +81,7 @@ export default function App() {
     <main>
       {hasWon ? <ReactConfetti width={360} height={380} /> : undefined}
       <Header statusText="Roll until all dice are the same. Click each die to freeze it at its current value between rolls." />
-      <DiceContainer die={die} onDiceClick={handleDiceClick} />
+      <div className="dice-container">{dieElements}</div>
       <button className="game-button" onClick={handleClick}>
         {hasWon ? "New Game" : "Roll"}
       </button>
