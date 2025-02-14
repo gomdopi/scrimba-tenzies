@@ -44,7 +44,7 @@ body {
 }
 
 .game-button {
-  width: 92px;
+  /* width: 92px; */
   height: 36px;
   font-family: Karla, sans-serif;
   font-size: 1rem;
@@ -54,6 +54,7 @@ body {
   background-color: #5035ff;
   border: none;
   box-shadow: 0px 3.2px 7.68px 0px #0000002e;
+  padding: 0 16px;
 }
 
 .die-container {
@@ -83,6 +84,6 @@ body {
   box-shadow: 0px 2px 2px 0px #00000026;
 
   &.frozen {
-    background-color: green;
+    background-color: #59e391;
   }
 }
