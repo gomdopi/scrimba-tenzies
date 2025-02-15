@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ReactConfetti from "react-confetti"
 import DieComponent from "./components/DieComponent"
 import Header from "./components/Header"
@@ -12,6 +12,13 @@ export type Die = {
 export default function App() {
   const [dice, setDice] = useState(initialDice)
   const hasWon = dice.every(die => die.frozen && die.value === dice[0].value)
+  const gameButtonRef = useRef(null)
+
+  useEffect(() => {
+    if (hasWon) {
+      ;(gameButtonRef.current! as HTMLButtonElement).focus()
+    }
+  }, [hasWon])
 
   const dieElements = dice.map(die => (
     <DieComponent key={die.idx} die={die} onDieClick={handleDieClick} />
@@ -68,9 +75,14 @@ export default function App() {
   return (
     <main>
       {hasWon ? <ReactConfetti width={360} height={380} /> : undefined}
+      <div aria-live="polite" className="sr-only">
+        {hasWon && (
+          <p>Congratulations! You won! Press "New Game" to play again.</p>
+        )}
+      </div>
       <Header statusText="Roll until all dice are the same. Click each die to freeze it at its current value between rolls." />
       <div className="dice-container">{dieElements}</div>
-      <button className="game-button" onClick={handleClick}>
+      <button ref={gameButtonRef} className="game-button" onClick={handleClick}>
         {hasWon ? "New Game" : "Roll"}
       </button>
     </main>
