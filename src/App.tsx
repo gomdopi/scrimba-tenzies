@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ReactConfetti from "react-confetti"
 import DieComponent from "./components/DieComponent"
 import Header from "./components/Header"
@@ -10,12 +10,8 @@ export type Die = {
 }
 
 export default function App() {
-  const [dice, setDice] = useState(initialDice())
-  const [hasWon, setHasWon] = useState(false)
-
-  useEffect(() => {
-    checkHasWon()
-  }, [dice])
+  const [dice, setDice] = useState(initialDice)
+  const hasWon = dice.every(die => die.frozen && die.value === dice[0].value)
 
   const dieElements = dice.map(die => (
     <DieComponent key={die.idx} die={die} onDieClick={handleDieClick} />
@@ -52,13 +48,6 @@ export default function App() {
     }
   }
 
-  function checkHasWon(): void {
-    const value = dice[0].value
-    if (dice.every(die => die.value === value && die.frozen)) {
-      setHasWon(true)
-    }
-  }
-
   function handleDieClick(idx: number): void {
     if (hasWon) return
     setDice(prevDice => {
@@ -71,7 +60,6 @@ export default function App() {
   function handleClick(): void {
     if (hasWon) {
       resetDice()
-      setHasWon(false)
     } else {
       rollDice()
     }
