@@ -11,14 +11,29 @@ export type Die = {
 
 export default function App() {
   const [dice, setDice] = useState(initialDice)
+  const [rolls, setRolls] = useState(0)
+  const [time, setTime] = useState(0)
+
+  const startedGame = rolls > 0 || dice.some(die => die.frozen)
   const hasWon = dice.every(die => die.frozen && die.value === dice[0].value)
   const gameButtonRef = useRef(null)
+
+  const interval = useRef(0)
+  useEffect(() => {
+    if (startedGame && interval.current === 0) {
+      interval.current = setInterval(
+        () => setTime(prevTime => prevTime + 1),
+        1000
+      )
+    }
+  }, [startedGame])
 
   useEffect(() => {
     if (hasWon) {
       ;(gameButtonRef.current! as HTMLButtonElement).focus()
+      clearInterval(interval.current)
     }
-  }, [hasWon])
+  }, [hasWon, interval])
 
   const dieElements = dice.map(die => (
     <DieComponent key={die.idx} die={die} onDieClick={handleDieClick} />
@@ -67,8 +82,12 @@ export default function App() {
   function handleClick(): void {
     if (hasWon) {
       resetDice()
+      setRolls(0)
+      setTime(0)
+      interval.current = 0
     } else {
       rollDice()
+      setRolls(prevRolls => prevRolls + 1)
     }
   }
 
@@ -85,6 +104,16 @@ export default function App() {
       <button ref={gameButtonRef} className="game-button" onClick={handleClick}>
         {hasWon ? "New Game" : "Roll"}
       </button>
+      <div className="rolls-timer-container">
+        <div>
+          Rolls:
+          <span className="rolls-counter">{rolls}</span>
+        </div>
+        <div>
+          Timer:
+          <span className="timer">{time}</span>
+        </div>
+      </div>
     </main>
   )
 }

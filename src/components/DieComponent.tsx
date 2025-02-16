@@ -6,7 +6,7 @@ export default function DiceComponent(props: {
 }) {
   const pipElements = []
   for (let i = 1; i <= props.die.value; i++) {
-    pipElements.push(<div className={`pip-${i}`}></div>)
+    pipElements.push(<div key={i} className={`pip-${i}`}></div>)
   }
 
   return (
