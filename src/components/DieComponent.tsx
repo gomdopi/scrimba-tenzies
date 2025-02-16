@@ -4,6 +4,11 @@ export default function DiceComponent(props: {
   die: Die
   onDieClick: (idx: number) => void
 }) {
+  const pipElements = []
+  for (let i = 1; i <= props.die.value; i++) {
+    pipElements.push(<div className={`pip-${i}`}></div>)
+  }
+
   return (
     <button
       className={"die" + (props.die.frozen ? " frozen" : "")}
@@ -13,7 +18,7 @@ export default function DiceComponent(props: {
         props.die.frozen ? "frozen" : "not frozen"
       }`}
     >
-      {props.die.value}
+      <div className={`pips-${props.die.value}`}>{pipElements}</div>
     </button>
   )
 }
